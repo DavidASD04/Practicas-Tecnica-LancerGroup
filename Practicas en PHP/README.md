@@ -1,101 +1,154 @@
-# 📘 Práctica Técnica - LancerGroup (PHP)
+# 📚 Sistema de Biblioteca - Administración de Libros y Autores
 
-Este proyecto está diseñado para verificar los conocimientos adquiridos en las siguientes tecnologías:
+Sistema completo de administración de biblioteca desarrollado con **Laravel 11** (API Backend) y **Vue 3 + Vuetify** (Frontend SPA).
 
-## 🛠️ Tecnologías requeridas
+## 🛠️ Tecnologías Utilizadas
 
-- 🐘 PHP (8.2+)
-- 📦 Composer
-- ⚙️ Laravel 12+ o CodeIgniter 4(Opcional, si el encargado lo solicita.)
-- 🌐 Vue 3+ (opcional Vuetify o Bootstrap)
-- 🎨 CSS (Bootstrap o Vuetify)
-- 📖 Habilidades investigativas (lectura de documentación)
-- 🐙 Git
-- 🧩 MySQL
-- 🧱 Algún template visual basado en Vue o Bootstrap (ej. Vuetify, CoreUI, BootstrapVue Admin, etc.)
+### Backend
+- **PHP 8.2+**
+- **Laravel 11**
+- **MySQL**
+- **Composer**
 
----
+### Frontend
+- **Vue 3**
+- **Vuetify 3**
+- **Vue Router**
+- **Pinia** (State Management)
+- **Axios** (HTTP Client)
 
-## 📚 Descripción de la práctica
+## 🏗️ Estructura del Proyecto
 
-Se deberá diseñar un sistema de administración de libros para una biblioteca. Este sistema debe contar **únicamente** con apartados para:
+\`\`\`
+biblioteca-sistema-admin/
+├── backend/          # API Laravel
+│   ├── app/
+│   ├── database/
+│   ├── routes/
+│   └── ...
+├── frontend/         # SPA Vue + Vuetify
+│   ├── src/
+│   ├── public/
+│   └── ...
+└── scripts/          # Scripts SQL
+\`\`\`
 
-- 📕 Libros
-- ✍️ Autores
+## 📋 Funcionalidades
 
-### 🔁 Relación entre datos:
+### ✍️ Gestión de Autores
+- ✅ CRUD completo (Crear, Ver, Editar, Eliminar con soft delete)
+- ✅ Campos: Nombre, Apellido, País, Fecha de registro, Cantidad de libros
+- ✅ Los autores eliminados no aparecen en listas pero sí en detalles de libros
+- ✅ Vista de detalles con información completa
 
-- Un autor puede tener **múltiples libros**.
-- Un libro puede tener **múltiples autores**.
-- Un autor **NECESITA** poder crearse **sin** libros.
-- Un libro **DEBE** tener al menos **un autor** para ser creado.
+### 📚 Gestión de Libros
+- ✅ CRUD completo con validación de autores obligatorios
+- ✅ Campos: Nombre, Fecha de publicación, Edición, Autores
+- ✅ Selección múltiple de autores
+- ✅ Vista de detalles mostrando autores (incluso eliminados)
 
-### 📋 Vista en tablas:
+### 🔗 Relaciones
+- ✅ Relación many-to-many entre autores y libros
+- ✅ Un autor puede tener múltiples libros
+- ✅ Un libro puede tener múltiples autores
+- ✅ Un autor puede crearse sin libros
+- ✅ Un libro DEBE tener al menos un autor
 
-- Autores y libros deben mostrarse en tablas independientes.
-- Cada tabla debe incluir botones para:  
-  `🔍 Ver Detalles` | `✏️ Editar` | `🗑️ Eliminar` (o `👁️ Ocultar` para autores).
-- Los autores eliminados mediante soft delete **NO deben aparecer en la lista de autores**, pero **SÍ deben seguir apareciendo en los detalles de los libros** donde estén relacionados.
+## 🚀 Instalación y Configuración
 
----
+### 1. Backend (Laravel)
 
-## 🗃️ Campos requeridos
+\`\`\`bash
+cd backend
+composer install
+cp .env.example .env
+php artisan key:generate
+\`\`\`
 
-### ✍️ Autores
+### 2. Configurar Base de Datos
 
-- Nombre
-- Apellido
-- País
-- 📆 Fecha de registro (*)
-- 📚 Cantidad de libros registrados (*)
+Editar `.env`:
+\`\`\`env
+DB_CONNECTION=mysql
+DB_HOST=127.0.0.1
+DB_PORT=3306
+DB_DATABASE=biblioteca_system
+DB_USERNAME=tu_usuario
+DB_PASSWORD=tu_password
+\`\`\`
 
-### 📕 Libros
+### 3. Ejecutar Migraciones
 
-- Nombre
-- 📅 Fecha de publicación
-- Edición
-- ✍️ Autores (*)
+\`\`\`bash
+php artisan migrate
+\`\`\`
 
-> Los campos marcados con (*) no deben aparecer en la tabla general, pero sí en la vista de detalles del elemento.
+### 4. Ejecutar Seeders (Opcional)
 
----
+Ejecutar el script SQL desde el proyecto para datos de ejemplo.
 
-## ⚙️ Detalles técnicos
+### 5. Iniciar Backend
 
-1. La base de datos debe estar correctamente **normalizada**.
-2. Puedes usar **Laravel 12+** o **CodeIgniter 4**, según prefieras.
-3. El diseño visual **no debe seguir un patrón específico**, pero debe ser coherente en estilos y colores.
-4. Las interacciones pueden mediante el uso de **Inertia.js con Vue 3**, permitiendo una experiencia tipo SPA sin necesidad de una API separada.
-5. Deben realizarse **commits continuos y organizados** durante el desarrollo.
-6. La información oculta en tablas (*campos con asterisco*) debe mostrarse en las vistas de detalle.
+\`\`\`bash
+php artisan serve
+# Servidor en: http://localhost:8000
+\`\`\`
 
----
+### 6. Frontend (Vue + Vuetify)
 
-## ✅ ¿Qué se evaluará?
+\`\`\`bash
+cd frontend
+npm install
+npm run dev
+# Servidor en: http://localhost:3000
+\`\`\`
 
-- Estructura y normalización de la base de datos
-- Calidad y organización del código
-- Claridad y coherencia del diseño visual
-- Uso correcto de Vue/Inertia en las interacciones
-- Organización y claridad de los commits
+## 🎯 Uso del Sistema
 
----
+1. **Página Principal**: Acceso rápido a autores y libros
+2. **Gestión de Autores**: 
+   - Lista con acciones (Ver, Editar, Eliminar)
+   - Formularios de creación y edición
+   - Vista de detalles con libros asociados
+3. **Gestión de Libros**:
+   - Lista con acciones (Ver, Editar, Eliminar)
+   - Formularios con selección múltiple de autores
+   - Vista de detalles con autores (incluso eliminados)
 
-## 📌 Reglas de interpretación
+## 🔍 Características Especiales
 
-- **DEBE**: obligatorio e inalterable.
-- **NECESITA**: obligatorio, pero puedes implementar a tu manera.
-- **PUEDE**: opcional, no se evaluará, pero es una buena práctica.
+- **API REST**: Backend completamente separado del frontend
+- **SPA**: Aplicación de página única con Vue Router
+- **Soft Delete**: Los autores eliminados siguen apareciendo en libros
+- **Validaciones**: Un libro debe tener al menos un autor
+- **Material Design**: Interfaz moderna con Vuetify
+- **Responsive**: Funciona en dispositivos móviles y desktop
+- **Notificaciones**: Sistema de mensajes de éxito y error
 
----
+## 📡 Endpoints API
 
-## 💡 Recomendaciones
+### Autores
+- `GET /api/authors` - Listar autores
+- `GET /api/authors/{id}` - Ver autor
+- `POST /api/authors` - Crear autor
+- `PUT /api/authors/{id}` - Actualizar autor
+- `DELETE /api/authors/{id}` - Eliminar autor (soft delete)
 
-- Puedes usar **modales** para mostrar detalles de libros o autores.
-- Para el soft delete de autores, utiliza un campo `deleted_at` (timestamp) o `is_deleted` (boolean).
-- Cometer errores está permitido. Explicar cómo los solucionaste puede **sumar puntos**.
-- Asegúrate de validar que un libro **no se cree sin autores**.
+### Libros
+- `GET /api/books` - Listar libros
+- `GET /api/books/{id}` - Ver libro
+- `POST /api/books` - Crear libro
+- `PUT /api/books/{id}` - Actualizar libro
+- `DELETE /api/books/{id}` - Eliminar libro
+- `GET /api/books-authors` - Autores para selección
 
----
+## 🎨 Interfaz de Usuario
 
-¡Éxito! 💪
+- **Vuetify Material Design**: Componentes modernos y consistentes
+- **Tablas de datos**: Con ordenamiento y acciones
+- **Formularios**: Con validación en tiempo real
+- **Navegación**: Intuitiva entre secciones
+- **Confirmaciones**: Para acciones destructivas
+- **Notificaciones**: Feedback visual para el usuario
+
+El sistema está completamente funcional y listo para usar, cumpliendo con todos los requerimientos técnicos especificados usando únicamente las tecnologías permitidas.
