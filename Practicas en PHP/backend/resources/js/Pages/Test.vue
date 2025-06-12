@@ -31,14 +31,7 @@
                   <v-btn color="info" variant="outlined">
                     <v-icon left>mdi-book</v-icon>
                     Ir a Libros
-                  </v-btn>
-                </Link>
-              </div>
-              
-              <div class="mt-6">
-                <h4>Información de la página actual:</h4>
-                <p><strong>URL:</strong> {{ $page.url }}</p>
-                <p><strong>Componente:</strong> {{ $page.component }}</p>
+                  </v-btn>                </Link>
               </div>
             </v-col>
           </v-row>

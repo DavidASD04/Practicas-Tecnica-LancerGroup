@@ -14,9 +14,8 @@
         </v-col>
       </v-row>
 
-      <!-- Formulario de prueba simple -->
-      <v-row>
-        <v-col cols="12" md="6">
+      <!-- Formulario de prueba simple -->      <v-row justify="center">
+        <v-col cols="12" md="8">
           <v-card>
             <v-card-title>Prueba de Formulario Simple</v-card-title>
             <v-card-text>
@@ -45,59 +44,7 @@
                 </v-btn>
               </form>
             </v-card-text>
-          </v-card>
-        </v-col>
-
-        <!-- Información de estado -->
-        <v-col cols="12" md="6">
-          <v-card>
-            <v-card-title>Estado de Pruebas</v-card-title>
-            <v-card-text>
-              <v-list>
-                <v-list-item>
-                  <v-list-item-title>Inertia Funcionando</v-list-item-title>
-                  <v-list-item-subtitle>✅ Esta página se cargó correctamente</v-list-item-subtitle>
-                </v-list-item>
-                
-                <v-list-item>
-                  <v-list-item-title>Vuetify Funcionando</v-list-item-title>
-                  <v-list-item-subtitle>✅ Los componentes se renderizan</v-list-item-subtitle>
-                </v-list-item>
-                
-                <v-list-item>
-                  <v-list-item-title>CSRF Token</v-list-item-title>
-                  <v-list-item-subtitle>{{ csrfToken ? '✅ Disponible' : '❌ No disponible' }}</v-list-item-subtitle>
-                </v-list-item>
-                
-                <v-list-item>
-                  <v-list-item-title>showNotification</v-list-item-title>
-                  <v-list-item-subtitle>{{ hasNotification ? '✅ Disponible' : '❌ No disponible' }}</v-list-item-subtitle>
-                </v-list-item>
-              </v-list>
-
-              <v-btn
-                color="info"
-                @click="testNotification"
-                class="mt-4"
-                block
-              >
-                Probar Notificación
-              </v-btn>
-            </v-card-text>
-          </v-card>
-        </v-col>
-      </v-row>
-
-      <!-- Estado de la aplicación -->
-      <v-row class="mt-4">
-        <v-col>
-          <v-card>
-            <v-card-title>Información de Debug</v-card-title>
-            <v-card-text>
-              <pre>{{ debugInfo }}</pre>
-            </v-card-text>
-          </v-card>
-        </v-col>
+          </v-card>        </v-col>
       </v-row>
     </div>
   </Layout>

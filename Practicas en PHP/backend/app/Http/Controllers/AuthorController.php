@@ -78,35 +78,45 @@ class AuthorController extends Controller
             
             return back()->withErrors(['error' => 'Error al crear el autor: ' . $e->getMessage()]);
         }
-    }
-
-    /**
+    }    /**
      * Display the specified resource.
      */
-    public function show(Author $author)
+    public function show(Request $request, Author $author)
     {
         $author->load('books');
-        
+
+        $authorData = [
+            'id' => $author->id,
+            'nombre' => $author->nombre,
+            'apellido' => $author->apellido,
+            'nombre_completo' => $author->nombre_completo,
+            'pais' => $author->pais,
+            'fecha_registro' => $author->fecha_registro,
+            'cantidad_libros' => $author->cantidad_libros,
+            'books' => $author->books->map(function ($book) {
+                return [
+                    'id' => $book->id,
+                    'nombre' => $book->nombre,
+                    'fecha_publicacion' => $book->fecha_publicacion,
+                    'edicion' => $book->edicion,
+                ];
+            }),
+            'created_at' => $author->created_at,
+            'updated_at' => $author->updated_at,
+        ];
+
+        // Si es una petición AJAX, retornar JSON
+        if ($request->wantsJson() || $request->ajax()) {
+            return response()->json([
+                'props' => [
+                    'author' => $authorData
+                ]
+            ]);
+        }
+
+        // Si es una petición normal, retornar la vista
         return Inertia::render('Authors/Show', [
-            'author' => [
-                'id' => $author->id,
-                'nombre' => $author->nombre,
-                'apellido' => $author->apellido,
-                'nombre_completo' => $author->nombre_completo,
-                'pais' => $author->pais,
-                'fecha_registro' => $author->fecha_registro,
-                'cantidad_libros' => $author->cantidad_libros,
-                'books' => $author->books->map(function ($book) {
-                    return [
-                        'id' => $book->id,
-                        'nombre' => $book->nombre,
-                        'fecha_publicacion' => $book->fecha_publicacion,
-                        'edicion' => $book->edicion,
-                    ];
-                }),
-                'created_at' => $author->created_at,
-                'updated_at' => $author->updated_at,
-            ]
+            'author' => $authorData
         ]);
     }
 

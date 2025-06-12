@@ -16,9 +16,7 @@
             </v-card-title>
           </v-card>
         </v-col>
-      </v-row>
-
-      <v-row>
+      </v-row>      <v-row justify="center">
         <v-col cols="12" lg="8">
           <v-card>
             <v-card-title>
@@ -60,16 +58,14 @@
                       :error-messages="formErrors.edicion"
                     ></v-text-field>
                   </v-col>
-                </v-row>
-
-                <v-row>
+                </v-row>                <v-row>
                   <v-col cols="12">
                     <v-select
                       v-model="form.authors"
                       :items="authorsList"
                       item-title="nombre_completo"
                       item-value="id"
-                      label="Autores"
+                      label="Autores (Requerido)"
                       prepend-icon="mdi-account-edit"
                       variant="outlined"
                       multiple
@@ -77,11 +73,19 @@
                       closable-chips
                       placeholder="Selecciona uno o más autores"
                       :error-messages="formErrors.authors"
-                    ></v-select>
+                      required
+                      hint="Debes seleccionar al menos un autor para el libro"
+                      persistent-hint
+                    >
+                      <template v-slot:chip="{ item, props }">
+                        <v-chip v-bind="props" color="primary" closable>
+                          <v-icon left small>mdi-account</v-icon>
+                          {{ item.title }}
+                        </v-chip>
+                      </template>
+                    </v-select>
                   </v-col>
-                </v-row>
-
-                <v-row class="mt-4">
+                </v-row>                <v-row class="mt-4">
                   <v-col cols="12">
                     <v-btn
                       type="submit"
@@ -89,7 +93,7 @@
                       size="large"
                       :loading="form.processing"
                       prepend-icon="mdi-content-save"
-                      :disabled="!form.nombre"
+                      :disabled="!form.nombre || !form.authors || form.authors.length === 0"
                       block
                     >
                       Crear Libro
@@ -98,36 +102,7 @@
                 </v-row>
               </form>
             </v-card-text>
-          </v-card>
-        </v-col>
-
-        <v-col cols="12" lg="4">
-          <v-card>
-            <v-card-title>
-              <v-icon left>mdi-information</v-icon>
-              Información
-            </v-card-title>
-            <v-card-text>
-              <v-alert 
-                type="info" 
-                variant="tonal"
-                class="mb-4"
-              >
-                <strong>Consejos:</strong>
-                <ul class="mt-2">
-                  <li>El título es obligatorio</li>
-                  <li>Puedes asociar múltiples autores</li>
-                </ul>
-              </v-alert>              <v-alert 
-                type="success" 
-                variant="tonal"
-                v-if="form.authors.length > 0"
-              >
-                <strong>Autores seleccionados:</strong> {{ form.authors.length }}
-              </v-alert>
-            </v-card-text>
-          </v-card>
-        </v-col>
+          </v-card>        </v-col>
       </v-row>
     </div>
   </Layout>

@@ -58,15 +58,16 @@ class BookController extends Controller
             'method' => $request->method(),
             'all_data' => $request->all(),
             'headers' => $request->headers->all(),
-        ]);
-
-        try {
+        ]);        try {
             $validated = $request->validate([
                 'nombre' => 'required|string|max:255',
                 'fecha_publicacion' => 'nullable|date',
                 'edicion' => 'nullable|string|max:100',
-                'authors' => 'array',
+                'authors' => 'required|array|min:1',
                 'authors.*' => 'exists:authors,id'
+            ], [
+                'authors.required' => 'Debes seleccionar al menos un autor para el libro.',
+                'authors.min' => 'Debes seleccionar al menos un autor para el libro.',
             ]);
 
             \Log::info('Validation passed', $validated);
@@ -91,33 +92,46 @@ class BookController extends Controller
             
             return back()->withErrors(['error' => 'Error al crear el libro: ' . $e->getMessage()]);
         }
-    }
-
-    /**
+    }    /**
      * Display the specified resource.
      */
-    public function show(Book $book)
+    public function show(Request $request, Book $book)
     {
-        $book->load('authors');        $bookData = [
+        $book->load('authors');
+
+        $bookData = [
             'id' => $book->id,
             'nombre' => $book->nombre,
-            'fecha_publicacion' => $book->fecha_publicacion?->format('Y-m-d'),
+            'fecha_publicacion' => $book->fecha_publicacion,
             'edicion' => $book->edicion,
             'authors' => $book->authors->map(function ($author) {
                 return [
                     'id' => $author->id,
                     'nombre' => $author->nombre,
                     'apellido' => $author->apellido,
+                    'nombre_completo' => $author->nombre . ' ' . $author->apellido,
                     'pais' => $author->pais,
                 ];
             }),
             'cantidad_autores' => $book->authors->count(),
+            'created_at' => $book->created_at,
+            'updated_at' => $book->updated_at,
         ];
 
+        // Si es una petición AJAX, retornar JSON
+        if ($request->wantsJson() || $request->ajax()) {
+            return response()->json([
+                'props' => [
+                    'book' => $bookData
+                ]
+            ]);
+        }
+
+        // Si es una petición normal, retornar la vista
         return Inertia::render('Books/Show', [
             'book' => $bookData
         ]);
-    }    /**
+    }/**
      * Show the form for editing the specified resource.
      */
     public function edit(Book $book)
@@ -147,14 +161,17 @@ class BookController extends Controller
 
     /**
      * Update the specified resource in storage.
-     */
-    public function update(Request $request, Book $book)
-    {        $validated = $request->validate([
+     */    public function update(Request $request, Book $book)
+    {
+        $validated = $request->validate([
             'nombre' => 'required|string|max:255',
             'fecha_publicacion' => 'nullable|date',
             'edicion' => 'nullable|string|max:100',
-            'authors' => 'array',
+            'authors' => 'required|array|min:1',
             'authors.*' => 'exists:authors,id'
+        ], [
+            'authors.required' => 'Debes seleccionar al menos un autor para el libro.',
+            'authors.min' => 'Debes seleccionar al menos un autor para el libro.',
         ]);
 
         $book->update($validated);

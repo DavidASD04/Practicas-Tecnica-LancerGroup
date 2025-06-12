@@ -1683,3 +1683,5 @@
 [2025-06-12 04:56:48] local.INFO: Author updated {"author_id":8} 
 [2025-06-12 04:56:52] local.INFO: AuthorController destroy() called {"author_id":8} 
 [2025-06-12 04:56:52] local.INFO: Author deleted {"author_id":8} 
+[2025-06-12 21:48:07] local.INFO: AuthorController destroy() called {"author_id":1} 
+[2025-06-12 21:48:07] local.INFO: Author deleted {"author_id":1} 

@@ -38,19 +38,16 @@
 
               <template v-slot:item.edicion="{ item }">
                 {{ item.edicion || 'N/A' }}
-              </template>
-
-              <template v-slot:item.actions="{ item }">
-                <Link :href="route('books.show', item.id)" class="text-decoration-none">
-                  <v-btn
-                    icon="mdi-eye"
-                    size="small"
-                    color="info"
-                    variant="text"
-                    class="mr-1"
-                  >
-                  </v-btn>
-                </Link>
+              </template>              <template v-slot:item.actions="{ item }">
+                <v-btn
+                  icon="mdi-eye"
+                  size="small"
+                  color="info"
+                  variant="text"
+                  class="mr-1"
+                  @click="viewBookDetails(item)"
+                >
+                </v-btn>
                 <Link :href="route('books.edit', item.id)" class="text-decoration-none">
                   <v-btn
                     icon="mdi-pencil"
@@ -73,9 +70,7 @@
             </v-data-table>
           </v-card>
         </v-col>
-      </v-row>
-
-      <!-- Dialog de confirmación -->
+      </v-row>      <!-- Dialog de confirmación -->
       <v-dialog v-model="deleteDialog" max-width="500px">
         <v-card>
           <v-card-title class="text-h5">
@@ -95,6 +90,21 @@
           </v-card-actions>
         </v-card>
       </v-dialog>
+
+      <!-- Modal de detalles del libro -->
+      <BookModal 
+        v-model="bookModal" 
+        :book="selectedBookForModal"
+        @close="closeBookModal"
+        @view-author="viewAuthorFromBook"
+      />
+
+      <!-- Modal de detalles del autor (cuando se hace clic desde un libro) -->
+      <AuthorModal 
+        v-model="authorModal" 
+        :author="selectedAuthorForModal"
+        @close="closeAuthorModal"
+      />
     </div>
   </Layout>
 </template>
@@ -104,6 +114,8 @@ import { ref } from 'vue'
 import { router, Link } from '@inertiajs/vue3'
 import { route } from 'ziggy-js'
 import Layout from '@/Components/Layout.vue'
+import BookModal from '@/Components/BookModal.vue'
+import AuthorModal from '@/Components/AuthorModal.vue'
 
 // Props del backend
 const props = defineProps({
@@ -113,6 +125,19 @@ const props = defineProps({
 const loading = ref(false)
 const deleteDialog = ref(false)
 const selectedBook = ref(null)
+const bookModal = ref(false)
+const selectedBookForModal = ref(null)
+const authorModal = ref(false)
+const selectedAuthorForModal = ref(null)
+
+// Función para mostrar notificaciones
+const showNotification = (message, type = 'info') => {
+  if (window.showNotification) {
+    window.showNotification(message, type)
+  } else {
+    console.log(`${type.toUpperCase()}: ${message}`)
+  }
+}
 
 const headers = [
   { title: 'Nombre', key: 'nombre', sortable: true },
@@ -147,5 +172,60 @@ const deleteBook = () => {
       showNotification('Error al eliminar el libro', 'error')
     }
   })
+}
+
+const viewBookDetails = async (book) => {
+  // Hacer una petición para obtener los detalles completos del libro
+  try {
+    const response = await fetch(route('books.show', book.id), {
+      headers: {
+        'Accept': 'application/json',
+        'X-Requested-With': 'XMLHttpRequest'
+      }
+    })
+    
+    if (response.ok) {
+      const data = await response.json()
+      selectedBookForModal.value = data.props.book
+      bookModal.value = true
+    } else {
+      showNotification('Error al cargar los detalles del libro', 'error')
+    }
+  } catch (error) {
+    console.error('Error:', error)
+    showNotification('Error al cargar los detalles del libro', 'error')
+  }
+}
+
+const closeBookModal = () => {
+  bookModal.value = false
+  selectedBookForModal.value = null
+}
+
+const viewAuthorFromBook = async (author) => {
+  try {
+    const response = await fetch(route('authors.show', author.id), {
+      headers: {
+        'Accept': 'application/json',
+        'X-Requested-With': 'XMLHttpRequest'
+      }
+    })
+    
+    if (response.ok) {
+      const data = await response.json()
+      selectedAuthorForModal.value = data.props.author
+      authorModal.value = true
+    } else {
+      showNotification('Error al cargar los detalles del autor', 'error')
+    }
+  } catch (error) {
+    console.error('Error:', error)
+    showNotification('Error al cargar los detalles del autor', 'error')
+  }
+}
+
+const closeAuthorModal = () => {
+  authorModal.value = false
+  selectedAuthorForModal.value = null
 }
 </script>
