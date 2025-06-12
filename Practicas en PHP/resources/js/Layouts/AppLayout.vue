@@ -5,7 +5,7 @@
         <div class="flex justify-between h-16">
           <div class="flex items-center">
             <Link :href="route('welcome')" class="flex items-center space-x-2">
-              <span class="text-2xl">📚</span>
+              <span class="text-2xl"></span>
               <span class="font-bold text-xl text-gray-800">Biblioteca</span>
             </Link>
           </div>
@@ -16,14 +16,14 @@
               class="text-gray-600 hover:text-gray-900 px-3 py-2 rounded-md text-sm font-medium"
               :class="{ 'bg-gray-100 text-gray-900': $page.component.startsWith('Authors') }"
             >
-              ✍️ Autores
+                Autores
             </Link>
             <Link
               :href="route('books.index')"
               class="text-gray-600 hover:text-gray-900 px-3 py-2 rounded-md text-sm font-medium"
               :class="{ 'bg-gray-100 text-gray-900': $page.component.startsWith('Books') }"
             >
-              📚 Libros
+               Libros
             </Link>
           </div>
         </div>

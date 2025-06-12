@@ -44,7 +44,7 @@
             </div>
 
             <div v-if="author.books.length > 0">
-              <h3 class="text-xl font-semibold text-gray-800 mb-4">📚 Libros del Autor</h3>
+              <h3 class="text-xl font-semibold text-gray-800 mb-4"> Libros del Autor</h3>
               <div class="grid gap-4">
                 <div
                   v-for="book in author.books"

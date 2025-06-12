@@ -3,7 +3,7 @@
         'name' => 'biblioteca/backend-api',
         'pretty_version' => 'dev-main',
         'version' => 'dev-main',
-        'reference' => '699e6723cf8e8ba35993ee27b201a2f814a88d28',
+        'reference' => 'bbfc31c9f3d5d2ba1f698e7f6cf887239c56dfa1',
         'type' => 'project',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
@@ -13,7 +13,7 @@
         'biblioteca/backend-api' => array(
             'pretty_version' => 'dev-main',
             'version' => 'dev-main',
-            'reference' => '699e6723cf8e8ba35993ee27b201a2f814a88d28',
+            'reference' => 'bbfc31c9f3d5d2ba1f698e7f6cf887239c56dfa1',
             'type' => 'project',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),
@@ -378,6 +378,15 @@
             'replaced' => array(
                 0 => 'v11.45.1',
             ),
+        ),
+        'inertiajs/inertia-laravel' => array(
+            'pretty_version' => 'v2.0.2',
+            'version' => '2.0.2.0',
+            'reference' => '248e815cf8d41307cbfb735efaa514c118e2f3b4',
+            'type' => 'library',
+            'install_path' => __DIR__ . '/../inertiajs/inertia-laravel',
+            'aliases' => array(),
+            'dev_requirement' => false,
         ),
         'kodova/hamcrest-php' => array(
             'dev_requirement' => true,
@@ -1273,6 +1282,15 @@
             'install_path' => __DIR__ . '/../theseer/tokenizer',
             'aliases' => array(),
             'dev_requirement' => true,
+        ),
+        'tightenco/ziggy' => array(
+            'pretty_version' => 'v2.5.3',
+            'version' => '2.5.3.0',
+            'reference' => '0b3b521d2c55fbdb04b6721532f7f5f49d32f52b',
+            'type' => 'library',
+            'install_path' => __DIR__ . '/../tightenco/ziggy',
+            'aliases' => array(),
+            'dev_requirement' => false,
         ),
         'tijsverkoyen/css-to-inline-styles' => array(
             'pretty_version' => 'v2.3.0',

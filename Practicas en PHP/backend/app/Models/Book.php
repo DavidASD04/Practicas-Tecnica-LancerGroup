@@ -13,10 +13,7 @@ class Book extends Model
     protected $fillable = [
         'nombre',
         'fecha_publicacion',
-        'edicion',
-        'descripcion',
-        'isbn',
-        'paginas'
+        'edicion'
     ];
 
     protected $casts = [

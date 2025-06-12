@@ -3,7 +3,7 @@
     <div class="container mx-auto px-4 py-16">
       <div class="text-center mb-12">
         <h1 class="text-4xl font-bold text-gray-800 mb-4">
-          📚 Sistema de Biblioteca
+           Sistema de Biblioteca
         </h1>
         <p class="text-xl text-gray-600 mb-8">
           Administra autores y libros de manera eficiente
@@ -13,7 +13,7 @@
       <div class="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto">
         <div class="bg-white rounded-lg shadow-lg p-8 hover:shadow-xl transition-shadow">
           <div class="text-center">
-            <div class="text-6xl mb-4">✍️</div>
+            <div class="text-6xl mb-4"> </div>
             <h2 class="text-2xl font-semibold text-gray-800 mb-4">Autores</h2>
             <p class="text-gray-600 mb-6">
               Gestiona la información de los autores de tu biblioteca
